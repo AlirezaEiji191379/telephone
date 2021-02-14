@@ -11,7 +11,7 @@ class Contact
         if($result->num_rows==0){
             return false;
         }
-        return $result->fetch_assoc();
+        return json_encode($result->fetch_assoc());
     }
 
     public static function getAllContacts(){

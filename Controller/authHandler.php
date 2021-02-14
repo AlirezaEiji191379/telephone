@@ -26,7 +26,7 @@ class authHandler
     public function requestProcess(){
         $response=null;
         if(is_null($this->mode) && $this->requestMethod=="GET"){
-            $response=$this->checkUserIsOnline();
+            $response=$this->checkCorrectType();
         }
         if(is_null($this->mode)==false && $this->requestMethod=="GET"){
             $response=$this->refreshAccessToken();
@@ -68,7 +68,7 @@ class authHandler
     }
 
 
-    private function checkUserIsOnline(){
+    public function checkCorrectType(){
         $decoded=authHandler::validateToken();
         if($decoded=="invalid token!" || $decoded=="expired token!") return $this->createMessageToClient("403","access denied!",$decoded);
         if($decoded->data->type!=$this->expectedType) return $this->createMessageToClient(403,"access denied!","access denied!");
