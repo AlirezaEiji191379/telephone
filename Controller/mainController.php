@@ -5,7 +5,7 @@ require_once ("authHandler.php");
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 $requestedMethod=$_SERVER["REQUEST_METHOD"];
-
+parse_str(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), $queries);
 
 if(isset($uri[4])){
     $controller=null;
@@ -13,8 +13,12 @@ if(isset($uri[4])){
         $controller=new loginController($requestedMethod);
         $controller->requestProcess();
     }
-    if($uri[4]=="User"){
+    if($uri[4]=="User" && !isset($queries["user"])){
         $controller=new UserController($requestedMethod);
+        $controller->requestProcess();
+    }
+    if($uri[4]=="User" && isset($queries["user"])){
+        $controller=new UserController($requestedMethod,$queries["user"]);
         $controller->requestProcess();
     }
     if($uri[4]=="refresh"){

@@ -37,7 +37,7 @@ class authHandler
 
     public static function generateJwtAccessTokenForUser(User $user){
         $issued_at = time();
-        $expiration_time = $issued_at + (900);
+        $expiration_time = $issued_at + (10);
         $payload=array(
             "start"=>$issued_at,
             "expire"=>$expiration_time,
@@ -51,7 +51,7 @@ class authHandler
 
     public static function generateJwtRefreshTokenForUser(User $user){
         $issued_at = time();
-        $expiration_time = $issued_at + (604800);
+        $expiration_time = $issued_at + (60);
         $payload=array(
             "start"=>$issued_at,
             "expire"=>$expiration_time,
@@ -117,7 +117,7 @@ class authHandler
                 return $this->createMessageToClient("403","Access denied!","forbidden!");
             }
             $issued_at = time();
-            $expiration_time = $issued_at + (900);
+            $expiration_time = $issued_at + (10);
             $payload=array(
                 "start"=>$issued_at,
                 "expire"=>$expiration_time,

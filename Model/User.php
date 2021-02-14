@@ -57,7 +57,7 @@ class User
         $password=password_hash(databaseController::makeSafe($input["password"]),PASSWORD_DEFAULT);
         $firstname=databaseController::makeSafe($input["firstname"]);
         $lastname=databaseController::makeSafe($input["lastname"]);
-        $phoneNumber=databaseController::makeSafe($input["phoneNumber"]);
+        $phoneNumber=databaseController::makeSafe($input["phone_number"]);
         $query="INSERT INTO `user` (`username`,`email`,`password`,`firstname`,`lastname`,`phone_number`) VALUES (?,?,?,?,?,?)";
         $db=new databaseController();
         $db->getConnection()->query($query);
