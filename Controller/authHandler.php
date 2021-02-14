@@ -15,9 +15,11 @@ class authHandler
 {
     private $requestMethod;
     private $mode;
-    function __construct($requestMethod,$mode=null)
+    private $expectedType;
+    function __construct($requestMethod,$expectedType,$mode=null)
     {
         $this->requestMethod=$requestMethod;
+        $this->expectedType=$expectedType;
         $this->mode=$mode;
     }
 
@@ -41,6 +43,7 @@ class authHandler
             "expire"=>$expiration_time,
             "data"=>array(
                 "user_id"=>$user->getUserId(),
+                "type" =>$user->getType()
             )
         );
         return JWT::encode($payload,keys);
@@ -54,6 +57,7 @@ class authHandler
             "expire"=>$expiration_time,
             "data"=>array(
                 "user_id"=>$user->getUserId(),
+                "type" =>$user->getType()
             )
         );
         $id=JWT::encode($payload,refreshKey);
@@ -67,6 +71,7 @@ class authHandler
     private function checkUserIsOnline(){
         $decoded=authHandler::validateToken();
         if($decoded=="invalid token!" || $decoded=="expired token!") return $this->createMessageToClient("403","access denied!",$decoded);
+        if($decoded->data->type!=$this->expectedType) return $this->createMessageToClient(403,"access denied!","access denied!");
         return $this->createMessageToClient("200","ok","ok");
     }
 
@@ -109,8 +114,6 @@ class authHandler
                 $sql="DELETE FROM `refreshtokens` WHERE `refresh_id`= '$refreshToken'";
                 $db->getConnection()->query($sql);
                 unset($_COOKIE["refreshToken"]);
-//                $sql="INSERT INTO `black_list` (`access_id`,`expires_at`) VALUES ('$token','$decoded->expire')";
-//                $db->getConnection()->query($sql);
                 return $this->createMessageToClient("403","Access denied!","forbidden!");
             }
             $issued_at = time();

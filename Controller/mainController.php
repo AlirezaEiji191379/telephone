@@ -18,9 +18,18 @@ if(isset($uri[4])){
         $controller->requestProcess();
     }
     if($uri[4]=="refresh"){
-        $controller=new authHandler("GET",null,"wer");
+        $controller=new authHandler("GET",null,"zdf");
         $controller->requestProcess();
     }
+    if($uri[4]=="authUser"){
+        $controller=new authHandler("GET","User",null);
+        $controller->requestProcess();
+    }
+    if($uri[4]=="authAdmin"){
+        $controller=new authHandler("GET","User",null);
+        $controller->requestProcess();
+    }
+
 }else{
 
 }

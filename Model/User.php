@@ -4,9 +4,11 @@
 class User
 {
     private $userId;
-    function __construct($userId)
+    private $type;
+    function __construct($userId,$type)
     {
         $this->userId=$userId;
+        $this->type=$type;
     }
 
 
@@ -16,6 +18,10 @@ class User
     }
 
 
+    public function getType()
+    {
+        return $this->type;
+    }
 
     public static function getUserById($id){
         $query="SELECT * FROM `user` WHERE `user_id`=?";
