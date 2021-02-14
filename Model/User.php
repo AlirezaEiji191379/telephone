@@ -52,21 +52,9 @@ class User
         $firstname=databaseController::makeSafe($input["firstname"]);
         $lastname=databaseController::makeSafe($input["lastname"]);
         $phoneNumber=databaseController::makeSafe($input["phoneNumber"]);
-        $query="CREATE TABLE $username (
-        contact_id INT(20)  AUTO_INCREMENT PRIMARY KEY,
-        fullname VARCHAR(80) NOT NULL,
-        phone1 VARCHAR(11) UNIQUE NOT NULL,
-        phone2 VARCHAR(11) UNIQUE NOT NULL,
-        home1 VARCHAR(10)  NULL,
-        home2 VARCHAR(10)  NULL,
-        fax VARCHAR(20) NULL,
-        email VARCHAR(60) NULL UNIQUE,
-        address TEXT NULL,
-        workPlace VARCHAR(80) NULL
-        )";
+        $query="INSERT INTO `user` (`username`,`email`,`password`,`firstname`,`lastname`,`phone_number`) VALUES (?,?,?,?,?,?)";
         $db=new databaseController();
         $db->getConnection()->query($query);
-        $query="INSERT INTO `user` (`username`,`email`,`password`,`firstname`,`lastname`,`phone_number`) VALUES (?,?,?,?,?,?)";
         $statement=$db->getConnection()->prepare($query);
         $statement->bind_param("ssssss",$username,$email,$password,$firstname,$lastname,$phoneNumber);
         $statement->execute();
