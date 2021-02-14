@@ -29,9 +29,18 @@ if(isset($uri[4])){
         $controller=new authHandler("GET","User",null);
         $controller->requestProcess();
     }
+    if($uri[4]=="contact"){
+        $controller=null;
+        if(isset($uri[5])){
+            $controller=new contactController($requestedMethod,$uri[5]);
+        }else{
+            $controller=new contactController($requestedMethod,null);
+        }
+        $controller->requestProcess();
+    }
 
 }else{
-
+    die("unproccessable request!");
 }
 
 
