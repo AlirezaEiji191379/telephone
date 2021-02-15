@@ -80,7 +80,7 @@ class authHandler
         $token=authHandler::getBearerToken();
         $db=new authDB();
         $sql="SELECT * FROM `black_list` WHERE `access_id`='$token'";
-        if($db->getConnection()->query($sql)->num_rows!=0) return "invalid token!";
+        if($db->getConnection()->query($sql)->num_rows!=0) return "access denied!";
         if(is_null($token)){
             return "invalid token!";
         }
@@ -123,6 +123,7 @@ class authHandler
                 "expire"=>$expiration_time,
                 "data"=>array(
                     "user_id"=>$decoded->data->user_id,
+                    "type"=>$decoded->data->type
                 )
             );
             return $this->createMessageToClient(200,"ok",JWT::encode($payload,keys));

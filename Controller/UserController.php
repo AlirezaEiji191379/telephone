@@ -88,13 +88,17 @@ class UserController
 
     private function registerUser(){
         $key="92?VH2WMrx";
-        $url=\Firebase\JWT\JWT::decode($this->urlToRegister,$key,array("HS256"));
-        if(time()>$url->expire){
-            return $this->createMessageToClient(403,"access denied!","access denied!");
+        try {
+            $url = \Firebase\JWT\JWT::decode($this->urlToRegister, $key, array("HS256"));
+            if (time() > $url->expire) {
+                return $this->createMessageToClient(403, "access denied!", "access denied!");
+            }
+            User::enableUser($url->data->verificationCode);
+            header("Location: http://localhost/telephone_project/View/login/index.html?registered=1");
         }
-        User::enableUser($url->data->verificationCode);
-        header("Location: http://localhost/telephone_project/View/login/index.html?register=1");
-        //return $this->createMessageToClient(200,"created!","successfully created!");
+        catch (Exception $exception) {
+            return $this->createMessageToClient("404", "Not Found!", "not found!");
+        }
     }
 
 

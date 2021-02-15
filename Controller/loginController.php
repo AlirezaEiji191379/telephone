@@ -21,7 +21,7 @@ class loginController
         }
 
         header($response["header"]);
-        echo json_encode($response["body"]);
+        echo json_encode($response["body"],JSON_UNESCAPED_UNICODE );
     }
 
     private  function login(){
@@ -33,16 +33,21 @@ class loginController
         $password=$input["password"];
         $result=User::getUserByUsername($username);
         if(is_array($result)==false){
-           return $this->createMessageToClient(404,"Not Found","wrong username or password!");
+           return $this->createMessageToClient(404,"Not Found","نام کاربری یا رمز عبور اشتباه است");
         }
         if(password_verify($password,$result["password"])==false){
-            return  $this->createMessageToClient(403,"Forbidden","wrong username or password!");
+            return  $this->createMessageToClient(403,"Forbidden","نام کاربری یا رمز عبور اشتباه است");
         }
-        $user=new User($result["user_id"]);
+        if($result["status"]!=1){
+            return  $this->createMessageToClient(403,"access denied!","حساب کاربری شما فعال نشده است لطفا از طریق ایمیل خود اقدام کنید!");
+        }
+        $user=new User($result["user_id"],$result["type"]);
         $token=authHandler::generateJwtAccessTokenForUser($user);
         $refresh=authHandler::generateJwtRefreshTokenForUser($user);
         setcookie("refreshToken",$refresh,null,null,null,false,true);/// needs to be changed!
-        return  $this->createMessageToClient(201,"created",$token);
+        $arr["accessToken"]=$token;
+        $arr["type"]=$user->getType();
+        return  $this->createMessageToClient(201,"created",$arr);
     }
 
     private function logout(){

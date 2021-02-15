@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="../request.js"></script>
+    <script>
+        data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/authUser",null);
+        if(data!="ok")window.location.replace("../login/index.html");
+    </script>
+
+
+    <title>User</title>
 </head>
 <body>
-
+asfdasdf
 </body>
 </html>

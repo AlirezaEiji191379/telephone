@@ -38,7 +38,7 @@ class User
     }
 
     public static function getUserByUsername($username){
-        $query="SELECT `user_id`,`username`,`password` FROM `user` WHERE `username`=?";
+        $query="SELECT `user_id`,`username`,`password`,`status`,`type` FROM `user` WHERE `username`=?";
         $db=new databaseController();
         $statement=$db->getConnection()->prepare($query);
         $statement->bind_param("s",$username);

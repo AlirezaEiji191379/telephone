@@ -3,14 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <script src="../../libs/jquery-3.5.1.js"></script>
-    <title>Title</title>
+    <script src="../request.js"></script>
+    <link type="text/css" rel="stylesheet" href="login.css">
+    <script>
+        data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/authUser",null);
+        if(data=="ok")window.location.replace("../user_account/index.html");
+        data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/authAdmin",null);
+        if(data=="ok")window.location.replace("../admin_account/index.html");
+        function changeDir(id) {
+            let inputName=document.getElementById(id);
+            if(inputName.value===""){
+                inputName.dir="rtl";
+            }else{
+                inputName.dir="ltr";
+            }
+        }
+    </script>
+    <title>صفحه ورود</title>
 </head>
 <body>
-    <p style="color: red"></p>
+<div class="container">
+    <form method="post">
+        <p style="color:red;"></p>
+        <div class="input-fluid">
+            <span class="hiddenSpan" id="username">نام کاربری</span>
+            <input class="username" type="text" name="username" id="usernameInput" maxlength="20" placeholder="نام کاربری"  onkeyup="changeDir(id)">
+        </div>
+        <div class="input-fluid">
+            <span class="hiddenSpan" id="password">رمز عبور</span>
+            <input class="password" id="passwordInput" type="password" name="password" maxlength="20" placeholder="رمز عبور"  onkeyup="changeDir(id)">
+        </div>
+        <input type="button" value="ارسال" id="myform">
+    </form>
+</div>
 
-
-
-
+<script src="animateSpan.js"></script>
+<script src="login.js"></script>
 <script>
     function getUrlVars()
     {

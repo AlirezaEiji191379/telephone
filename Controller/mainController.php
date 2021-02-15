@@ -30,7 +30,7 @@ if(isset($uri[4])){
         $controller->requestProcess();
     }
     if($uri[4]=="authAdmin"){
-        $controller=new authHandler("GET","User",null);
+        $controller=new authHandler("GET","Admin",null);
         $controller->requestProcess();
     }
     if($uri[4]=="contact"){

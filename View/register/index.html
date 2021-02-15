@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="register.css">
-    <title>منوی ثبت نام</title>
     <script src="../request.js"></script>
     <script>
         data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/authUser",null);
-        alert(data)
         if(data=="ok")window.location.replace("../user_account/index.html");
         data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/authAdmin",null);
-        alert(data)
         if(data=="ok")window.location.replace("../admin_account/index.html");
         function changeDir(id) {
             let inputName=document.getElementById(id);
@@ -21,6 +18,7 @@
             }
         }
     </script>
+    <title>منوی ثبت نام</title>
 </head>
 <body>
 
