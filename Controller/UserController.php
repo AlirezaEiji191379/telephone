@@ -30,7 +30,7 @@ class UserController
             $response=$this->registerUser();
         }
         header($response["header"]);
-        echo json_encode($response["body"]);
+        echo json_encode($response["body"], JSON_UNESCAPED_UNICODE );
     }
 
     private function sendEmailForRegistration(){
@@ -94,46 +94,46 @@ class UserController
         }
         User::enableUser($url->data->verificationCode);
         header("Location: http://localhost/telephone_project/View/login/index.html?register=1");
-        return $this->createMessageToClient(200,"created!","successfully created!");
+        //return $this->createMessageToClient(200,"created!","successfully created!");
     }
 
 
     private function checkValidation($input){
         if(!isset($input["username"]) || !isset($input["password"]) || !isset($input["email"])||
             !isset($input["phoneNumber"]) || !isset($input["firstname"]) || !isset($input["lastname"])){
-            return $this->createMessageToClient(403,"not allowed!","please complete inputs!");
+            return $this->createMessageToClient(403,"not allowed!","لطفا همه فیلد ها را کامل پر کنید.");
         }
         if(strlen($input["username"])<8 || strlen($input["username"])>20){
-            return $this->createMessageToClient(403,"invalid","invalid username!");
+            return $this->createMessageToClient(403,"invalid","نام کاربری باید بین 8 تا 20 حرف باشد.");
         }
 
         if(strlen($input["password"])<8 || strlen($input["password"])>20){
-            return $this->createMessageToClient(403,"invalid","invalid password!");
+            return $this->createMessageToClient(403,"invalid","رمز عبور باید بین 8 تا 20 حرف باشد!");
         }
 
         if(preg_match('/^[a-zA-Z0-9]{5,}$/', $input["username"]) == false) {
-            return $this->createMessageToClient(403,"invalid","the username must have only alphanumeric characters!");
+            return $this->createMessageToClient(403,"invalid","نام کاربری باید فقط شامل حروف الفبا و عدد باشد.");
         }
         if(preg_match('/^[a-zA-Z0-9]{5,}$/', $input["password"]) == false) {
-            return $this->createMessageToClient(403,"invalid","the password must have only alphanumeric characters!");
+            return $this->createMessageToClient(403,"invalid","رمز عبور باید فقط شامل حروف الفبا و عدد باشد.");
         }
 
         if(is_numeric($input["phoneNumber"]) ==false){
-            return $this->createMessageToClient(403,"invalid","please enter valid phone number!");
+            return $this->createMessageToClient(403,"invalid","لطفا شماره تلفن همراه معتبر وارد کنید");
         }
 
         if (!filter_var($input["email"], FILTER_VALIDATE_EMAIL)) {
-            return $this->createMessageToClient(403,"invalid","please enter valid email!");
+            return $this->createMessageToClient(403,"invalid","لطفا پست الکترونیکی معتبر وارد کنید");
         }
 
         if(User::hasUserWithUsername($input["username"])){
-            return $this->createMessageToClient(403,"invalid!","this username was registered in the system!");
+            return $this->createMessageToClient(403,"invalid!","این نام کاربری قبلا ثبت شده است");
         }
         if(User::hasUserWithPhoneNumber($input["phoneNumber"])){
-            return $this->createMessageToClient(403,"invalid!","this phoneNumber was registered in the system!");
+            return $this->createMessageToClient(403,"invalid!","این شماره تلفن قبلا ثبت شده است");
         }
         if(User::hasUserWithEmail($input["email"])){
-            return $this->createMessageToClient(403,"invalid!","this email was registered in the system!");
+            return $this->createMessageToClient(403,"invalid!","این پست الکترونیکی قبلا ثبت شده است");
         }
         return true;
     }

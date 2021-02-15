@@ -30,6 +30,7 @@ function sendAjaxRequest(method,url,data){ /// for requests with authorization!
     xhttp.open(method,url,false)
     head="Bearer "+window.localStorage.getItem('accessToken');
     xhttp.setRequestHeader("Authorization",head);
+    xhttp.setRequestHeader("Content-Type","application/json; charset=UTF-8");
     if(data==null) xhttp.send()
     else xhttp.send(data)
     return returned;
@@ -47,6 +48,7 @@ function repeatRequest(method,url,data){
     xmlHttpRequest.open(method,url,false)
     head="Bearer "+window.localStorage.getItem('accessToken');
     xmlHttpRequest.setRequestHeader("Authorization",head);
+    xhttp.setRequestHeader("Content-Type","application/json; charset=UTF-8");
     if(data==null) xmlHttpRequest.send()
     else xmlHttpRequest.send(data)
     return response;
@@ -67,6 +69,7 @@ function refreshRequest(){
     xmlHttpRequest.open("GET","http://localhost//HealthComplex_Project/Controller/mainController.php/refresh",false);
     head="Bearer "+window.localStorage.getItem('accessToken');
     xmlHttpRequest.setRequestHeader("Authorization",head);
+    xhttp.setRequestHeader("Content-Type","application/json; charset=UTF-8");
     xmlHttpRequest.send();
     return returned;
 }
