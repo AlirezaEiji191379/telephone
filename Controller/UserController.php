@@ -1,7 +1,7 @@
 <?php
 
 header("Content-Type: application/json; charset=UTF-8");
-require '../libs/PHPMailer-5.2.16/PHPMailerAutoload.php';
+require_once ('../libs/PHPMailer-5.2.16/PHPMailerAutoload.php');
 require_once ("../Model/User.php");
 require_once ("databaseController.php");
 require_once ('../libs/php-jwt-master/src/BeforeValidException.php');
@@ -25,6 +25,7 @@ class UserController
         $response=null;
         if($this->requestMethod=="POST")
             $response=$this->sendEmailForRegistration();
+
         if($this->urlToRegister!=null && $this->requestMethod=="GET"){
             $response=$this->registerUser();
         }
@@ -86,14 +87,14 @@ class UserController
     }
 
     private function registerUser(){
-        $key='92?VH2WMrx';
+        $key="92?VH2WMrx";
         $url=\Firebase\JWT\JWT::decode($this->urlToRegister,$key,array("HS256"));
         if(time()>$url->expire){
             return $this->createMessageToClient(403,"access denied!","access denied!");
         }
         User::enableUser($url->data->verificationCode);
         header("Location: http://localhost/telephone_project/View/login/index.html?register=1");
-        //return $this->createMessageToClient(200,"created!","successfully created!");
+        return $this->createMessageToClient(200,"created!","successfully created!");
     }
 
 
@@ -140,7 +141,7 @@ class UserController
     private function createVerificationCodeForUser(){
         $code=rand(10000,1000000);
         $result=User::hasUserWithVerificationCode($code);
-        if($result==false){
+        if($result==true){
             $this->createVerificationCodeForUser();
         }
         return $code;
