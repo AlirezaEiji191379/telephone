@@ -58,11 +58,12 @@ class User
         $firstname=databaseController::makeSafe($input["firstname"]);
         $lastname=databaseController::makeSafe($input["lastname"]);
         $phoneNumber=databaseController::makeSafe($input["phone_number"]);
-        $query="INSERT INTO `user` (`username`,`email`,`password`,`firstname`,`lastname`,`phone_number`) VALUES (?,?,?,?,?,?)";
+        $verificationCode=$input["verificationCode"];
+        $query="INSERT INTO `user` (`username`,`email`,`password`,`firstname`,`lastname`,`phone_number`,`verificationCode`) VALUES (?,?,?,?,?,?,?)";
         $db=new databaseController();
         $db->getConnection()->query($query);
         $statement=$db->getConnection()->prepare($query);
-        $statement->bind_param("ssssss",$username,$email,$password,$firstname,$lastname,$phoneNumber);
+        $statement->bind_param("ssssss",$username,$email,$password,$firstname,$lastname,$phoneNumber,$verificationCode);
         $statement->execute();
     }
 
@@ -107,6 +108,33 @@ class User
         }else{
             return false;
         }
+    }
+
+    public static function hasUserWithVerificationCode($verification){
+        $query="SELECT * FROM `user` WHERE `status`=0 AND `verificationCode`=?";
+        $db=new databaseController();
+        $statement=$db->getConnection()->prepare($query);
+        $statement->bind_param("s",$phoneNumber);
+        $statement->execute();
+        $result=$statement->get_result();
+        if($result->num_rows>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function enableUser($verification){
+        $query="UPDATE `user` SET status=1 WHERE `status`=0 AND `verificationCode`=?";
+        $db=new databaseController();
+        $statement=$db->getConnection()->prepare($query);
+        $statement->bind_param("s",$phoneNumber);
+        $statement->execute();
+        $result=$statement->get_result();
+        if($result===true){
+            return true;
+        }
+        return false;
     }
 
 

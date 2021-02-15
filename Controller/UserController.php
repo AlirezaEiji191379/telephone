@@ -37,19 +37,15 @@ class UserController
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
         $result=$this->checkValidation($input);
         if(is_array($result))return $result;
-
+        $input["verificationCode"]=$this->createVerificationCodeForUser();
+        User::createUser($input);
         $issued_at = time();
         $expiration_time = $issued_at + (900);
         $payload=array(
             "start"=>$issued_at,
             "expire"=>$expiration_time,
             "data"=>array(
-                "username"=>$input["username"],
-                "password"=>$input["password"],
-                "email"=>$input["email"],
-                "phone_number"=>$input["phoneNumber"],
-                "firstname"=>$input["firstname"],
-                "lastname"=>$input["lastname"]
+                "verificationCode"=>$input["verificationCode"]
             )
         );
         $key="92?VH2WMrx";
@@ -95,14 +91,9 @@ class UserController
         if(time()>$url->expire){
             return $this->createMessageToClient(403,"access denied!","access denied!");
         }
-        $input["username"]=$url->data->username;
-        $input["password"]=$url->data->password;
-        $input["email"]=$url->data->email;
-        $input["phone_number"]=$url->data->phone_number;
-        $input["firstname"]=$url->data->firstname;
-        $input["lastname"]=$url->data->lastname;
-        User::createUser($input);
-        return $this->createMessageToClient(200,"created!","successfully created!");
+        User::enableUser($url->data->verificationCode);
+        header("Location: http://localhost/telephone_project/View/login/index.html?register=1");
+        //return $this->createMessageToClient(200,"created!","successfully created!");
     }
 
 
@@ -144,6 +135,15 @@ class UserController
             return $this->createMessageToClient(403,"invalid!","this email was registered in the system!");
         }
         return true;
+    }
+
+    private function createVerificationCodeForUser(){
+        $code=rand(10000,1000000);
+        $result=User::hasUserWithVerificationCode($code);
+        if($result==false){
+            $this->createVerificationCodeForUser();
+        }
+        return $code;
     }
 
     private function createMessageToClient($httpCode,$headerMessage,$body){

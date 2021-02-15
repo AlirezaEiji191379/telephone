@@ -2,14 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="register.css">
     <title>منوی ثبت نام</title>
-<!--    <script src="https://www.google.com/recaptcha/api.js"></script>-->
-<!--    <div class="g-recaptcha brochure__form__captcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>-->
-
+    <script src="../request.js"></script>
+    <script>
+        data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/authUser",null);
+        alert(data)
+        if(data=="ok")window.location.replace("../user_account/index.html");
+        data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/authAdmin",null);
+        alert(data)
+        if(data=="ok")window.location.replace("../admin_account/index.html");
+        function changeDir(id) {
+            let inputName=document.getElementById(id);
+            if(inputName.value===""){
+                inputName.dir="rtl";
+            }else{
+                inputName.dir="ltr";
+            }
+        }
+    </script>
 </head>
 <body>
 
+<div class="container">
+    <p style="color:red;"></p>
+    <form method="post">
+        <h1>فرم ثبت نام</h1>
+        <div class="input-fluid">
+            <span class="hiddenSpan" id="username" >نام کاربری</span>
+            <input class="username" type="text" name="username" id="usernameInput" maxlength="20" placeholder="نام کاربری" onkeyup="changeDir('usernameInput')">
+        </div>
+        <div class="input-fluid">
+            <span class="hiddenSpan" id="password">رمز عبور</span>
+            <input class="password" id="passwordInput" type="password" name="password" maxlength="20" placeholder="رمز عبور" onkeyup="changeDir('passwordInput')">
+        </div>
+        <div class="input-fluid">
+            <span class="hiddenSpan" id="confirm">تایید</span>
+            <input class="confirm" id="confirmInput" type="password" maxlength="20" placeholder="تایید" onkeyup="changeDir('confirmInput')">
+        </div>
+        <div class="input-fluid">
+            <span class="hiddenSpan" id="email">پست الکترونیکی</span>
+            <input class="email" id="emailInput" type="email" name="email" placeholder="پست الکترونیکی" onkeyup="changeDir('emailInput')">
+        </div>
+        <div class="input-fluid">
+            <span class="hiddenSpan" id="phoneNumber">تلفن همراه</span>
+            <input class="phoneNumber" id="phoneNumberInput" type="text" placeholder="تلفن همراه"  name="phoneNumber" maxlength="11" onkeyup="changeDir('phoneNumberInput')">
+        </div>
+        <div class="input-fluid">
+            <span class="hiddenSpan" id="firstName">نام</span>
+            <input class="firstName" id="firstNameInput" type="text" name="firstName" maxlength="20" placeholder="نام" onkeyup="changeDir('firstNameInput')">
+        </div>
+        <div class="input-fluid">
+            <span class="hiddenSpan" id="lastName">نام خانوادگی</span>
+            <input class="lastName" id="lastNameInput" type="text" name="lastName" maxlength="20" placeholder="نام خانوادگی" onkeyup="changeDir('lastNameInput')">
+        </div>
+        <div class="ClearFix">
+            <input type="button" id="myform" value="ارسال">
+        </div>
 
-
+    </form>
+</div>
+<script src="../../libs/jquery-3.5.1.js"></script>
+<script src="animateSpan.js"></script>
+<script src="register.js"></script>
 </body>
 </html>
+
+
+

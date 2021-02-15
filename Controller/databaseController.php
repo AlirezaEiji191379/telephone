@@ -21,10 +21,14 @@ class databaseController
         return stripcslashes(htmlspecialchars(trim($input)));
     }
 
+    public function closeConnection(){
+        $this->connection->close();
+    }
+
     function __destruct()
     {
         // TODO: Implement __destruct() method.
-        $this->connection->close();
+        //$this->connection->close();
     }
 
     public function getConnection(){
