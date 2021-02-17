@@ -1,2 +1,38 @@
+.container{
+border: solid magenta;
+border-radius:10px ;
+padding-left:12%;
+padding-top: 2%;
+padding-bottom: 2%;
+margin-top: 10%;
+width: 70%;
+background-color: #3a75e9;
+}
 
+.form-group{
+margin-top: 2%;
+}
 
+.form-control{
+    padding: 20px;
+    border: none;
+    background-color: #ffffff;
+}
+
+::placeholder{
+    font-size: 17px;
+}
+
+.btn{
+    border-radius: 4px;
+}
+
+#footer {
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    /* Height of the footer*/
+    height: 40px;
+    background: grey;
+}

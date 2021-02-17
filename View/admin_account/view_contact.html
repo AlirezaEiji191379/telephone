@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <script src="../request.js"></script>
@@ -9,10 +9,46 @@
     </script>
     <script src="../../libs/jquery-3.5.1.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="view_contact.css">
     <title>مخاطب</title>
 </head>
-<body>
+<body dir="rtl" style="background: #eeeded">
 
+
+<div class="container">
+<form dir="rtl" id="form">
+    <div class="form-row">
+        <div class="form-group col-sm-10">
+            <input type="text" class="form-control" id="fullname" placeholder="نام و نام خانوادگی" required>
+        </div>
+        <div class="form-group col-md-5">
+            <input type="text" class="form-control" id="phone1" placeholder="شماره همراه اول" required>
+        </div>
+    </div>
+    <div class="form-group col-md-5">
+        <input type="text" class="form-control" id="phone2" placeholder="شماره همراه دوم">
+    </div>
+    <div class="form-group col-md-5">
+        <input type="text" class="form-control" id="home1" placeholder="شماره تلفن ثابت">
+    </div>
+    <div class="form-group col-md-5">
+        <input type="text" class="form-control" id="fax" placeholder="فکس">
+    </div>
+    <div class="form-group col-md-10">
+        <textarea class="form-control" rows="5" id="address" placeholder="آدرس"></textarea>
+    </div>
+    <button type="button" class="btn btn-success col-md-5 btn-lg" style="margin-left: 20%">ارسال</button>
+</form>
+</div>
+
+<div id="footer">
+تس
+</div>
 
 </body>
+
+
+
+
+
 </html>
