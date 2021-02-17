@@ -44,7 +44,7 @@ class loginController
         $user=new User($result["user_id"],$result["type"]);
         $token=authHandler::generateJwtAccessTokenForUser($user);
         $refresh=authHandler::generateJwtRefreshTokenForUser($user);
-        setcookie("refreshToken",$refresh,null,null,null,false,true);/// needs to be changed!
+        setcookie("refreshToken",$refresh,time()+604800,null,null,false,true);/// needs to be changed!
         $arr["accessToken"]=$token;
         $arr["type"]=$user->getType();
         return  $this->createMessageToClient(201,"created",$arr);
