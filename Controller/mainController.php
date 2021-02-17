@@ -2,6 +2,7 @@
 require_once ("loginController.php");
 require_once ("UserController.php");
 require_once ("authHandler.php");
+require_once ("contactController.php");
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 $requestedMethod=$_SERVER["REQUEST_METHOD"];

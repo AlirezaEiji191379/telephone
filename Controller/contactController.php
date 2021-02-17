@@ -1,6 +1,6 @@
 <?php
 
-
+require_once ("../Model/Contact.php");
 class contactController
 {
     private $contact_id;
@@ -52,7 +52,7 @@ class contactController
     private function addContact(){
         $authHandler=new authHandler("GET","Admin",null);
         $response=$authHandler->checkCorrectType();
-        if($response["header"]!=200) return $response;
+        if($response["header"]!="HTTP/1.1 200 ok") return $response;
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
         $result=$this->validateContact();
         if($result!=true){

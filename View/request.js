@@ -3,7 +3,7 @@ function sendAjaxRequest(method,url,data){ /// for requests with authorization!
     let returned=null;
     xhttp.onreadystatechange=function () {
         if(this.readyState==4){
-            if(this.status==200){
+            if(this.status==200 || this.status==201){
                 returned=JSON.parse(this.responseText);
             }
             else{
