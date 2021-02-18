@@ -79,7 +79,7 @@
             <td style="text-align: center">${arrObj[i]["email"]}</td>
             <td style="text-align: center">${arrObj[i]["phone2"]}</td>
             <td style="text-align: center">${arrObj[i]["phone1"]}</td>
-            <td style="text-align: center">${arrObj[i]["fullname"]}</td>
+            <td style="text-align: center"><a href="view_contact.html?id=${arrObj[i]["contact_id"]}">${arrObj[i]["fullname"]}</a></td>
             </tr>`;
                 $("#contacts").append(htmlTable)
             }
