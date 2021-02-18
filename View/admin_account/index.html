@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <script src="../request.js"></script>
     <script>
-        data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/authAdmin",null);
-        if(data!="ok")window.location.replace("../login/index.html");
+        data = sendAjaxRequest("GET", "http://localhost/telephone_project/Controller/mainController.php/authAdmin", null);
+        if (data != "ok") window.location.replace("../login/index.html");
     </script>
     <!-- bootstrap! -->
-    <link rel="stylesheet" type="text/css" href="admin.css">
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 
@@ -21,8 +21,8 @@
             <div class="navbar-brand">دفترچه تلفن</div>
         </div>
         <ul class="nav navbar-nav" style="float: right">
-            <li class="active"  style="float: right"><a href="#">صفحه اصلی</a></li>
-            <li ><a href="#" style="float: right">صفحه مدیر</a></li>
+            <li class="active" style="float: right"><a href="index.html">خانه</a></li>
+            <li><a href="view_contact.html" style="float: right">مخاطب ها</a></li>
         </ul>
     </div>
 </nav>
@@ -30,15 +30,35 @@
 <body>
 
 
-<div>
-<button type="button" class="btn btn-info btn-outline-info" onclick="window.location.href='view_contact.html'">افزودن مخاطب</button>
+<div class="container-fluid">
+    <div class="row">
+        <div>
+            <button type="button" class="btn btn-info btn-outline-info btn-md col-lg-2"
+                    onclick="window.location.href='view_contact.html'" style="margin-left: 20px">افزودن مخاطب +
+            </button>
+        </div>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <input type="text" class="form-control"  style="margin-bottom:4%;">
+            </div>
+        </div>
+        <div class="col-lg-5">
+        </div>
+    </div>
 </div>
 
+<div class="container-fluid" id="tableContainer">
+    <table class="table table-hover">
+        <tr>
+            <th  style="text-align: center">پست الکترونیکی</th>
+            <th  style="text-align: center">تلفن محل کار</th>
+            <th  style="text-align: center">تلفن همراه </th>
+            <th  style="text-align: center">نام و نام خانوادگی</th>
+        </tr>
 
-<div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Search">
+    </table>
+
 </div>
-
 
 <div id="footer" style="color:#f5f5f6; font-size: 18px ">
     پروژه دفترچه تلفن

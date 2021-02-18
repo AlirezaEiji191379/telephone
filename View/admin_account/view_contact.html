@@ -9,7 +9,7 @@
     </script>
     <script src="../../libs/jquery-3.5.1.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="view_contact.css">
+    <link rel="stylesheet" href="css/view_contact.css">
     <title>مخاطب</title>
 </head>
 
@@ -23,8 +23,8 @@ background: #f8f8f4;
             <div class="navbar-brand">دفترچه تلفن</div>
         </div>
         <ul class="nav navbar-nav" style="float: right">
-            <li style="float: right"><a href="#">صفحه اصلی</a></li>
-            <li class="active"><a href="#" style="float: right">صفحه مدیر</a></li>
+            <li style="float: right"><a href="index.html">خانه</a></li>
+            <li class="active"><a href="view_contact.html" style="float: right">مخاطب ها</a></li>
         </ul>
     </div>
 </nav>
@@ -42,12 +42,12 @@ background: #f8f8f4;
 
         <div class="form-group col-md-10">
             <span class="hiddenSpan" id="phone1" >شماره همراه اول</span>
-            <input maxlength="11" type="text" class="form-control phone1" id="phone1Input" placeholder="شماره همراه اول">
+            <input maxlength="11" type="text" class="form-control phone1" id="phone1Input" placeholder="تلفن همراه" required>
         </div>
 
         <div class="form-group col-md-10">
             <span class="hiddenSpan" id="phone2" >شماره همراه دوم</span>
-            <input maxlength="11" type="text" class="form-control phone2" id="phone2Input" placeholder="شماره همراه دوم" required>
+            <input maxlength="11" type="text" class="form-control phone2" id="phone2Input" placeholder="تلفن محل کار" required>
         </div>
     </div>
     <div class="form-group col-md-10">
@@ -76,7 +76,7 @@ background: #f8f8f4;
 پروژه دفترچه تلفن
 </div>
 
-<script src="animateSpan.js"></script>
-<script src="view.js"></script>
+<script src="js/animateSpan.js"></script>
+<script src="js/view.js"></script>
 </body>
 </html>
