@@ -19,9 +19,9 @@ $("#btns").click(
         let address=$("#addressInput").val();
         let newContact=new Contact(fullname,phone1,phone2,home1,email,fax,address);
         let  jsonData=JSON.stringify(newContact);
-        ///console.log(jsonData);
-        sendAjaxRequest("POST","http://localhost/telephone_project/Controller/mainController.php/contact",jsonData)
-        window.location.replace("index.html");
+        data=sendAjaxRequest("POST","http://localhost/telephone_project/Controller/mainController.php/contact",jsonData)
+        if(data=="ok")window.location.replace("index.html");
+        else $("p").text(data);
     }
 );
 

@@ -7,3 +7,16 @@
 .btn.btn-primary:hover{
     background-color: #1dc116;
 }
+
+
+#footer {
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    /* Height of the footer*/
+    height: 70px;
+    background: grey;
+    text-align: center;
+}
+

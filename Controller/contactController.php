@@ -30,7 +30,7 @@ class contactController
             $response=$this->deleteContactById();
         }
         header($response["header"]);
-        echo json_encode($response["body"]);
+        echo json_encode($response["body"],JSON_UNESCAPED_UNICODE);
     }
 
     private function getContactById($id){
@@ -54,8 +54,8 @@ class contactController
         $response=$authHandler->checkCorrectType();
         if($response["header"]!="HTTP/1.1 200 ok") return $response;
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        $result=$this->validateContact();
-        if($result!=true){
+        $result=$this->validateContact($input);
+        if(is_array($result)){
             return $result;
         }
         Contact::addContact($input);
@@ -92,10 +92,29 @@ class contactController
         return $this->createMessageToClient(200,"ok!","ok");
     }
 
-    private function validateContact(){
+    private function validateContact($input){
         if(!isset($input["fullname"]) || !isset($input["phone1"]) || !isset($input["home1"])||
             !isset($input["address"]) || !isset($input["email"])){
-            return $this->createMessageToClient(403,"not allowed!","please complete inputs!");
+            return $this->createMessageToClient(403,"not allowed!","لطفا تمامی فیلد ها را پر کنید");
+        }
+        if(is_numeric($input["phone1"])==false){
+            return $this->createMessageToClient(403,"not allowed!","لطفا تلفن معتبر وارد کنید");
+        }
+        if(is_numeric($input["home1"])==false){
+            return $this->createMessageToClient(403,"not allowed!","لطفا تلفن معتبر وارد کنید");
+        }
+        if (!filter_var($input["email"], FILTER_VALIDATE_EMAIL)) {
+            return $this->createMessageToClient(403,"invalid","لطفا پست الکترونیکی معتبر وارد کنید");
+        }
+        if(isset($input["phone2"])) {
+            if (is_numeric($input["phone2"]) == false) {
+                return $this->createMessageToClient(403, "not allowed!", "لطفا تلفن معتبر وارد کنید");
+            }
+        }
+        if(isset($input["fax"])){
+            if (is_numeric($input["fax"]) == false) {
+                return $this->createMessageToClient(403, "not allowed!", "لطفا فکس معتبر وارد کنید");
+            }
         }
         return true;
     }
