@@ -105,10 +105,38 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">${jsonData["fullname"]}</h4>
+                <h2 style="float: right;" class="modal-title">اطلاعات کاربری</h2>
             </div>
             <div class="modal-body">
-                <p>Some text in the modal.</p>
+                <div class="card" style="width: 18rem;">
+                    <div class="card w-50" dir="rtl">
+
+                        <div class="card-body">
+                        <span class="card-title">نام و نام خانوادگی :</span>
+                        <span class="card-text">${jsonData["fullname"]}</span>
+                        <hr>
+                        <span class="card-title">تلفن همراه :</span>
+                        <span class="card-text">${jsonData["phone1"]}</span>
+                        <hr>
+                        <span class="card-title"> تلفن محل کار :</span>
+                        <span class="card-text">${jsonData["phone2"]}</span>
+                        <hr>
+                        <span class="card-title">تلفن منزل :</span>
+                        <span class="card-text">${jsonData["home1"]}</span>
+                        <hr>
+                        <span class="card-title">فکس :</span>
+                        <span class="card-text">${jsonData["fax"]}</span>
+                        <hr>
+                        <span class="card-title"> پست الکترونیکی :</span>
+                        <span class="card-text">${jsonData["email"]}</span>
+                        <hr>
+                        <span class="card-title"> آدرس :</span>
+                        <span class="card-text">${jsonData["email"]}</span>
+                        <hr>
+                        </div>
+                        <hr>
+                        </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
