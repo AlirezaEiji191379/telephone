@@ -75,4 +75,11 @@ function refreshRequest(){
 }
 
 
+function logoutRequest(){
+        data=sendAjaxRequest("DELETE","http://localhost/telephone_project/Controller/mainController.php/logout",null);
+        if(data=="ok") window.localStorage.removeItem("accessToken");
+}
+
+
+
 

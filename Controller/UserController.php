@@ -66,7 +66,7 @@ class UserController
         $mail->WordWrap = 50;
         $mail->isHTML(true);
         $mail->Port = 587;
-        $mail->Subject = 'ایمیل فعال سازی';
+        $mail->Subject = 'confirmation email';
         $mail->Body    =" 
         <!DOCTYPE html>
         <html lang='en'>

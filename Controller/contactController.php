@@ -84,7 +84,7 @@ class contactController
     private function deleteContactById(){
         $authHandler=new authHandler("GET","Admin",null);
         $response=$authHandler->checkCorrectType();
-        if($response["header"]!=200) return $response;
+        if($response["header"]!="HTTP/1.1 200 ok") return $response;
         $sql="SELECT * FROM `contacts` WHERE `contact_id`='$this->contact_id'";
         $db=new databaseController();
         $result=$db->getConnection()->query($sql);

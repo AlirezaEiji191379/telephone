@@ -60,7 +60,8 @@ class loginController
         $db->getConnection()->query($sql);
         $sql="DELETE FROM `refreshtokens` WHERE `refresh_id`= '$refreshToken'";
         $db->getConnection()->query($sql);
-        $this->createMessageToClient("200","ok","ok");
+        unset($_COOKIE["refreshToken"]);
+        return $this->createMessageToClient("200","ok","ok");
     }
 
 

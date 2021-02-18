@@ -22,8 +22,9 @@
         </div>
         <ul class="nav navbar-nav" style="float: right">
             <li class="active" style="float: right"><a href="index.html">خانه</a></li>
-            <li><a href="view_contact.html" style="float: right">مخاطب ها</a></li>
+            <li style="float: right"><a href="view_contact.html" style="float: right">مخاطب ها</a></li>
         </ul>
+            <a href="../login/index.html" style="color: #eeeded" onclick="logoutRequest()">خروج</a>
     </div>
 </nav>
 
@@ -39,7 +40,7 @@
         </div>
         <div class="col-lg-5">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="search" id="search"  style="margin-bottom:4%;">
+                <input type="text" class="form-control" placeholder="" id="search"  style="margin-bottom:4%;">
             </div>
         </div>
         <div class="col-lg-5">
@@ -51,6 +52,7 @@
     <table class="table table-hover">
         <thead>
           <tr>
+            <th  style="text-align: center"></th>
             <th  style="text-align: center">پست الکترونیکی</th>
             <th  style="text-align: center">تلفن محل کار</th>
             <th  style="text-align: center">تلفن همراه </th>
@@ -74,8 +76,10 @@
             for(let i=0 ;i <data.length ; i++){
                 arrObj[i]=JSON.parse(data[i]);
             }
+            $("#search").attr("placeholder","search from "+data.length+" contacts!")
             for(let i=0;i<data.length;i++){
                 let htmlTable=`<tr id=${arrObj[i]["contact_id"]}>
+            <td style="text-align: center"><a href="index.html" onclick="sendDeleteRequest(${arrObj[i]['contact_id']})">حذف</a></td>
             <td style="text-align: center">${arrObj[i]["email"]}</td>
             <td style="text-align: center">${arrObj[i]["phone2"]}</td>
             <td style="text-align: center">${arrObj[i]["phone1"]}</td>
@@ -93,6 +97,10 @@
             });
         });
     });
+    function sendDeleteRequest(id){
+        data=sendAjaxRequest("DELETE","http://localhost/telephone_project/Controller/mainController.php/contact/"+id,null);
+    }
+
 </script>
 </body>
 </html>

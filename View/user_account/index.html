@@ -3,15 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <script src="../request.js"></script>
+    <script src="../../libs/jquery-3.5.1.js"></script>
     <script>
         data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/authUser",null);
         if(data!="ok")window.location.replace("../login/index.html");
     </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="user.css">
 
-    <title>User</title>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header" style="float: right">
+                <div class="navbar-brand">دفترچه تلفن</div>
+            </div>
+            <ul class="nav navbar-nav" style="float: right">
+                <li class="active" style="float: right"><a href="index.html">خانه</a></li>
+                <li style="float: right">            <a href="../login/index.html" style="color: #eeeded" onclick="logoutRequest()">خروج</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <title>صفحه کاربری</title>
 </head>
+
 <body>
-asfdasdf
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="" id="search"  style="margin-bottom:4%;">
+            </div>
+        </div>
+        <div class="col-lg-5">
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" id="tableContainer">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th  style="text-align: center"></th>
+            <th  style="text-align: center">پست الکترونیکی</th>
+            <th  style="text-align: center">تلفن محل کار</th>
+            <th  style="text-align: center">تلفن همراه </th>
+            <th  style="text-align: center">نام و نام خانوادگی</th>
+        </tr>
+        </thead>
+        <tbody id="contacts">
+
+        </tbody>
+    </table>
+</div>
+
+<div id="footer" style="color:#f5f5f6; font-size: 18px ">
+    پروژه دفترچه تلفن
+</div>
+
+
+
+<script>
+    $(document).ready(
+        function (){
+            data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/contact",null);
+            let arrObj=new Array();
+            for(let i=0 ;i <data.length ; i++){
+                arrObj[i]=JSON.parse(data[i]);
+            }
+            $("#search").attr("placeholder","search from "+data.length+" contacts!")
+            for(let i=0;i<data.length;i++){
+                let htmlTable=`<tr id=${arrObj[i]["contact_id"]}>
+            <td style="text-align: center"><a data-toggle="modal" data-target="#myModal" onclick="showPopUp(${arrObj[i]["contact_id"]})" href="#")">مشاهده</a></td>
+            <td style="text-align: center">${arrObj[i]["email"]}</td>
+            <td style="text-align: center">${arrObj[i]["phone2"]}</td>
+            <td style="text-align: center">${arrObj[i]["phone1"]}</td>
+            <td style="text-align: center">${arrObj[i]["fullname"]}</td>
+            </tr>`;
+                $("#contacts").append(htmlTable)
+            }
+        }
+    );
+    $(document).ready(function(){
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#contacts tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+    function showPopUp(id){
+        data=sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/contact/"+id,null);
+        let jsonData=JSON.parse(data);
+        let htmlModal=`
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">${jsonData["fullname"]}</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+        `;
+        $("#footer").after(htmlModal);
+    }
+</script>
+
 </body>
 </html>

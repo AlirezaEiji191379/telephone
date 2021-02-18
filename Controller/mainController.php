@@ -43,6 +43,10 @@ if(isset($uri[4])){
         }
         $controller->requestProcess();
     }
+    if($uri[4]=="logout"){
+        $controller=new loginController($requestedMethod);
+        $controller->requestProcess();
+    }
 
 }else{
     die("unproccessable request!");

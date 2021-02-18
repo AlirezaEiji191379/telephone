@@ -5,7 +5,7 @@ input[type=text] {
     border-radius: 4px;
     font-size: 15px;
     background-color: white;
-    background-image: url('../image/search.png');
+    background-image: url('./image/search.png');
     background-size: 25px;
     background-position: 5px 5px;
     background-repeat: no-repeat;
@@ -14,7 +14,7 @@ input[type=text] {
 }
 
 input[type=text]:focus {
-    width: 100%;
+    width: 1200px;
 }
 
 #footer {
@@ -27,4 +27,3 @@ input[type=text]:focus {
     background: grey;
     text-align: center;
 }
-
