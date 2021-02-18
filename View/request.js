@@ -1,4 +1,4 @@
-function sendAjaxRequest(method,url,data){ /// for requests with authorization!
+function sendAjaxRequest(method,url,dataToSend){ /// for requests with authorization!
     let xhttp=new XMLHttpRequest();
     let returned=null;
     xhttp.onreadystatechange=function () {
@@ -14,14 +14,14 @@ function sendAjaxRequest(method,url,data){ /// for requests with authorization!
                 }
                 else{
                     if(response=="expired token!") {
-                        let data = refreshRequest();
-                        if (data === false) {
+                        let data1 = refreshRequest();
+                        if (data1 === false) {
                             returned= "login";
                         }
                         localStorage.removeItem("accessToken");
-                        localStorage.setItem("accessToken",data)
-                        data=repeatRequest(method,url,data);
-                        returned=data;
+                        localStorage.setItem("accessToken",data1)
+                        data1=repeatRequest(method,url,dataToSend);
+                        returned=data1;
                     }
                 }
             }
@@ -31,8 +31,8 @@ function sendAjaxRequest(method,url,data){ /// for requests with authorization!
     head="Bearer "+window.localStorage.getItem('accessToken');
     xhttp.setRequestHeader("Authorization",head);
     xhttp.setRequestHeader("Content-Type","application/json; charset=UTF-8");
-    if(data==null) xhttp.send()
-    else xhttp.send(data)
+    if(dataToSend==null) xhttp.send()
+    else xhttp.send(dataToSend)
     return returned;
 }
 

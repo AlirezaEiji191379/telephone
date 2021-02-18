@@ -54,7 +54,7 @@ class contactController
         $response=$authHandler->checkCorrectType();
         if($response["header"]!="HTTP/1.1 200 ok") return $response;
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        $result=$this->validateContact($input);
+        $result=$this->validateContactForRegistration($input);
         if(is_array($result)){
             return $result;
         }
@@ -65,18 +65,19 @@ class contactController
     private function updateContactById(){
         $authHandler=new authHandler("GET","Admin",null);
         $response=$authHandler->checkCorrectType();
-        if($response["header"]!=200) return $response;
+        if($response["header"]!="HTTP/1.1 200 ok") return $response;
         $sql="SELECT * FROM `contacts` WHERE `contact_id`='$this->contact_id'";
         $db=new databaseController();
         $result=$db->getConnection()->query($sql);
         if($result->num_rows==0)return $this->createMessageToClient(404,"not found!","not found!");
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        $result=$this->validateContact();
-        if($result!=true){
+        $result=$this->validateContactForUpdation($input);
+        if(is_array($result)==true){
             return $result;
         }
-        Contact::updateContactById($this->contact_id,$input);
-        return $this->createMessageToClient(200,"ok!","ok");
+        $result=Contact::updateContactById($this->contact_id,$input);
+        if($result===true) return $this->createMessageToClient(200,"ok!","ok");
+        else return $this->createMessageToClient(400,"bad command!","دستور نادرست!");
     }
 
 
@@ -92,7 +93,7 @@ class contactController
         return $this->createMessageToClient(200,"ok!","ok");
     }
 
-    private function validateContact($input){
+    private function validateContactForRegistration($input){
         if(!isset($input["fullname"]) || !isset($input["phone1"]) || !isset($input["home1"])||
             !isset($input["address"]) || !isset($input["email"])){
             return $this->createMessageToClient(403,"not allowed!","لطفا تمامی فیلد ها را پر کنید");
@@ -121,6 +122,14 @@ class contactController
         }
         if(Contact::hasContactWithEmail($input["email"])){
             return $this->createMessageToClient(403,"invalid!","این پست الکترونیکی قبلا ثبت شده است");
+        }
+        return true;
+    }
+
+    private function validateContactForUpdation($input){
+        if(!isset($input["fullname"]) || !isset($input["phone1"]) || !isset($input["home1"])|| !isset($input["phone2"]) ||
+            !isset($input["address"]) || !isset($input["email"])){
+            return $this->createMessageToClient(403,"not allowed!","لطفا تمامی فیلد ها را پر کنید");
         }
         return true;
     }

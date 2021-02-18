@@ -19,12 +19,29 @@ $("#btns").click(
         let address=$("#addressInput").val();
         let newContact=new Contact(fullname,phone1,phone2,home1,email,fax,address);
         let  jsonData=JSON.stringify(newContact);
-        data=sendAjaxRequest("POST","http://localhost/telephone_project/Controller/mainController.php/contact",jsonData)
+        let query=getUrlVars()["id"];
+        if(query==null) {
+            data = sendAjaxRequest("POST", "http://localhost/telephone_project/Controller/mainController.php/contact", jsonData)
+        }else{
+            data=sendAjaxRequest("PUT","http://localhost/telephone_project/Controller/mainController.php/contact/"+query,jsonData)
+        }
         if(data=="ok")window.location.replace("index.html");
         else $("p").text(data);
     }
 );
 
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
 
 
 

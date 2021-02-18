@@ -61,12 +61,12 @@ class Contact
         $fax=databaseController::makeSafe($input["fax"]);
         $email=databaseController::makeSafe($input["email"]);
         $address=databaseController::makeSafe($input["address"]);
-        $sql="UPDATE `contacts` SET (`fullname`,`phone1`,`phone2`,`home1`,`fax`,`email`,`address`) VALUES
-        (?,?,?,?,?,?,?)";
+        $sql="UPDATE `contacts` SET `fullname`=?,`phone1`=?,`phone2`=?,`home1`=?,`fax`=?,`email`=?,`address`=?  WHERE `contact_id`= '$id' ";
         $db=new databaseController();
         $statement=$db->getConnection()->prepare($sql);
         $statement->bind_param("sssssss",$fullname,$phone1,$phone2,$home1,$fax,$email,$address);
-        $statement->execute();
+        $result=$statement->execute();
+        return $result;
     }
 
     public static function hasContactWithEmail($email){

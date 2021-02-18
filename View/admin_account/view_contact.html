@@ -96,6 +96,14 @@ background: #f8f8f4;
         $("#btns").text("ارسال");
     }else{
         $("#btns").text("به روز رسانی");
+        let data=JSON.parse(sendAjaxRequest("GET","http://localhost/telephone_project/Controller/mainController.php/contact/"+query,null));
+        $("#fullnameInput").val(data["fullname"]);
+        $("#phone1Input").val(data["phone1"]);
+        $("#phone2Input").val(data["phone2"]);
+        $("#home1Input").val(data["home1"]);
+        $("#emailInput").val(data["email"]);
+        $("#faxInput").val(data["fax"]);
+        $("#addressInput").val(data["address"]);
     }
 </script>
 </body>
