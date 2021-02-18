@@ -21,7 +21,7 @@ class Contact
         if($result->num_rows==0){
             return false;
         }
-        $json="";
+        $json=null;
         $i=0;
         while ($row=$result->fetch_assoc()){
             $json[$i]=json_encode($row);
@@ -69,6 +69,33 @@ class Contact
         $statement->execute();
     }
 
+    public static function hasContactWithEmail($email){
+        $query="SELECT * FROM `contacts` WHERE `email`=?";
+        $db=new databaseController();
+        $statement=$db->getConnection()->prepare($query);
+        $statement->bind_param("s",$email);
+        $statement->execute();
+        $result=$statement->get_result();
+        if($result->num_rows>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function hasContactWithPhoneNumber($phoneNumber){
+        $query="SELECT * FROM `contacts` WHERE `phone1`=?";
+        $db=new databaseController();
+        $statement=$db->getConnection()->prepare($query);
+        $statement->bind_param("s",$phoneNumber);
+        $statement->execute();
+        $result=$statement->get_result();
+        if($result->num_rows>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 }

@@ -45,7 +45,7 @@ class contactController
         $decoded=authHandler::validateToken();
         if($decoded=="invalid token!" || $decoded=="expired token!") return $this->createMessageToClient("403","access denied!",$decoded);
         $result=Contact::getAllContacts();
-        if($result==false) return $this->createMessageToClient(404,"not found!","not found!");
+        if(is_array($result)==false) return $this->createMessageToClient(404,"not found!","not found!");
         return $this->createMessageToClient(200,"ok!",$result);
     }
 
@@ -115,6 +115,12 @@ class contactController
             if (is_numeric($input["fax"]) == false) {
                 return $this->createMessageToClient(403, "not allowed!", "لطفا فکس معتبر وارد کنید");
             }
+        }
+        if(Contact::hasContactWithPhoneNumber($input["phone1"])){
+            return $this->createMessageToClient(403,"invalid!","این شماره تلفن قبلا ثبت شده است");
+        }
+        if(Contact::hasContactWithEmail($input["email"])){
+            return $this->createMessageToClient(403,"invalid!","این پست الکترونیکی قبلا ثبت شده است");
         }
         return true;
     }
