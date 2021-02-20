@@ -98,6 +98,10 @@ class contactController
             !isset($input["address"]) || !isset($input["email"])){
             return $this->createMessageToClient(403,"not allowed!","لطفا تمامی فیلد ها را پر کنید");
         }
+        if(empty($input["fullname"]) || empty($input["phone1"]) || empty($input["home1"])||
+            empty($input["address"]) || empty($input["email"])){
+            return $this->createMessageToClient(403,"not allowed!","لطفا تمامی فیلد ها را پر کنید");
+        }
         if(is_numeric($input["phone1"])==false){
             return $this->createMessageToClient(403,"not allowed!","لطفا تلفن معتبر وارد کنید");
         }

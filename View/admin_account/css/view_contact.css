@@ -1,24 +1,20 @@
-body, html {
+html,body {
     height: 100%;
-    font: 400 15px/1.8 "Lato", sans-serif;
+    background: url("../image/back2.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /*font: 400 15px/1.8 "Lato", sans-serif;*/
 }
 
-/*!*.bg {*/
-/*!*    background-image: url("./image/images1.jfif");*/
-/*!**/
-/*!*    height: 100%;*/
-/*!**/
-/*!*    background-position: center;*/
-/*!*    background-repeat: no-repeat;*/
-/*!*    background-size: cover;*/
-/*!*}*/
 
 .container{
 border-radius:10px ;
 padding-top: 2%;
 padding-bottom: 2%;
 padding-left: 10%;
-margin-top: 7%;
+margin-top: 2%;
 width: 60%;
 background-color: #62c5e9;
 }
@@ -45,18 +41,18 @@ margin-top: 3%;
 }
 
 #footer {
-    position: fixed;
+    position: relative;
     padding: 10px 10px 0px 10px;
     bottom: 0;
     width: 100%;
-    /* Height of the footer*/
     height: 70px;
+    /* Height of the footer*/
     background: grey;
     text-align: center;
 }
 
 
-.hiddenSpan{
-    display: none; /* in unfocused state! */
-    background-color: #eeeded;
-}
+/*.hiddenSpan{*/
+/*    !*display: none; !* in unfocused state! *!*!*/
+/*    background-color: #282727;*/
+/*}*/
